@@ -5,7 +5,7 @@ There are two files, train_model.py which contains the functions and structure o
 interactive.py which provides a small GUI screen to draw a digit 0-9. The user's drawing can be inputted into the 
 trained model by pressing a key in which the neural network outputs its guess.
 
-##Installation
+## Installation
 * Pip install h5py (built with 3.1.0)
 * Pip install tensorflow (built with 2.5.0)
 * Pip install numpy (built with 1.19.5)
@@ -14,7 +14,7 @@ trained model by pressing a key in which the neural network outputs its guess.
   http://www.pjreddie.com/media/files/mnist_train.csv  
   http://www.pjreddie.com/media/files/mnist_test.csv
 
-##Usage
+## Usage
 Before running any python files please make sure you have completed ALL above installation steps.    
 
 Read train_model.py function build_model, to see the structure of the neural network.  
@@ -27,7 +27,7 @@ Above the drawing section there are two key prompts, pressing C, deletes everyth
 Pressing T queries the trained model, a text along the bottom of the border displays the neural network's 
 guess. 
 
-##Credits
+## Credits
 * Author: Lee Taylor
 
 ##Note

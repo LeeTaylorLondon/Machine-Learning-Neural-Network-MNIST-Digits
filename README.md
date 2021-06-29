@@ -30,6 +30,6 @@ guess.
 ## Credits
 * Author: Lee Taylor
 
-##Note
+## Note
 This is my first interative machine learning project, inspired by the book,
 Make Your Own Neural Network by Tariq Rashid. 

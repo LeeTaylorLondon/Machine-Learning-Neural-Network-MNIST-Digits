@@ -2,6 +2,7 @@ from keras import Sequential
 from keras.layers import Dense
 from tensorflow import keras
 from train_model import trained_model
+from typing import List, NoReturn
 import numpy as np
 import pygame
 import os
@@ -10,13 +11,12 @@ import os
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 D_BLUE = (0, 32, 96)
-
-WIDTH, HEIGHT = 500, 500
+WIDTH, HEIGHT = 400, 335
 
 
 def load_model() -> keras.Sequential:
     model = None
-    # Try loading model structure and weights from folder
+    # Try loading model structure and weights from dir
     try:
         model = keras.models.load_model('model')
     except (OSError, AttributeError):
@@ -46,6 +46,13 @@ def load_model() -> keras.Sequential:
         raise TypeError("Cannot execute above. mnist_data folder does not contain training and test data.")
     return trained_model()
 
+def create_text(arr:List[str], font_size:int) -> List[pygame.font.SysFont]:
+    rv = []
+    font = pygame.font.SysFont('chalkduster.tff', font_size)
+    for s in arr:
+        rv.append(font.render(s, True, BLACK))
+    return rv
+
 
 class Window:
     def __init__(self):
@@ -55,11 +62,13 @@ class Window:
         self.clock = pygame.time.Clock()
         # non pygame attrs
         self.pixels = [[255 for _ in range(28)] for _ in range(28)]
+        self.text = create_text(["[Key T: Query Neural Network]", "[Key C: Clear drawing]", ""], 16)
         self.model = load_model()
         # continuous loop
         self.render()
 
-    def preprocess_input(self):
+    def preprocess_input(self) -> np.array:
+        """ Converts user drawing to acceptable input for the ML model. """
         rv = []
         for vec in self.pixels:
             for n in vec:
@@ -67,29 +76,41 @@ class Window:
         rv = np.array([np.array(rv, dtype="int16")])
         return rv
 
-    def clear_screen(self):
+    def clear_screen(self) -> NoReturn:
         self.pixels = [[255 for _ in range(28)] for _ in range(28)]
 
-    def render(self):
+    def query_nn(self):
+        """
+        Creates text object of the neural network's answer to be rendered.
+
+        Converts user drawing to input for ML model. ML Model is queried,
+         the output is converted to a string and then converted to a text object.
+         The text object is added to self.text to be rendered to the user."""
+        self.text[2] = create_text([f"Neural Network Output: {str(np.argmax(self.model(self.preprocess_input())))}"], 16)[0]
+
+    def render(self) -> NoReturn:
         while self.run:
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_q:
                         self.run = False
                     if event.key == pygame.K_t:
-                        print(np.argmax(self.model(self.preprocess_input())))
+                        self.query_nn()
                     if event.key == pygame.K_c:
                         self.clear_screen()
             self.screen.fill(WHITE)
             # --[render start]-- It might be slightly slower to put
             # the below code blocks i.e render pixels, render border, handle input
             # into functions or methods of class Window --[render start]--
-
             # Render pixels
             for y,vec in enumerate(self.pixels):
                 for x,p in enumerate(vec):
                     pygame.draw.rect(self.screen, (p, p, p),
                                      [x * 10,y * 10, 10, 10])
+            # Render text
+            self.screen.blit(self.text[0], (10, 10))
+            self.screen.blit(self.text[1], (180, 10))
+            self.screen.blit(self.text[2], (30, 300))
             # Render border
             pygame.draw.line(self.screen, D_BLUE, (40, 37), (283, 37), 5) # top
             pygame.draw.line(self.screen, D_BLUE, (37, 35), (37, 284), 5) # left
@@ -110,7 +131,6 @@ class Window:
                             self.pixels[y//10][x//10] -= 51
                     except IndexError:
                         pass
-
             # --[render end]--
             pygame.display.flip()
             self.clock.tick(144)

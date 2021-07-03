@@ -73,7 +73,7 @@ class Window:
         for vec in self.pixels:
             for n in vec:
                 rv.append(255 - n)
-        rv = np.array([np.array(rv, dtype="int16")])
+        rv = np.array([np.array(rv, dtype="float32")]) / 255.0
         return rv
 
     def clear_screen(self) -> NoReturn:

@@ -1,6 +1,6 @@
-import keras
-from keras.models import Sequential
-from keras.layers import Dense
+from tensorflow import keras
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
 from typing import Tuple
 import numpy as np
 import tensorflow as tf
@@ -25,7 +25,7 @@ def load_data(fd:str) -> Tuple[np.array, np.array]:
         labels.append([0.01 for x in range(10)])
         labels[i][int(s[0])] = 0.99
     # convert arrays to numpy array
-    x = np.asarray(images, dtype='int16')
+    x = np.asarray(images, dtype='float32') / 255.0
     y = np.asarray(labels, dtype='float32')
     return x, y
 

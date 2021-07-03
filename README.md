@@ -15,17 +15,28 @@ trained model by pressing a key in which the neural network outputs its guess.
   http://www.pjreddie.com/media/files/mnist_test.csv
 
 ## Usage
-Before running any python files please make sure you have completed ALL above installation steps.    
+Before running any python files please make sure you have completed ALL above installation steps.
 
 Read train_model.py function build_model, to see the structure of the neural network.  
 If you run train_model.py, it will build and train a new model which will overwrite the existing saved model
 and weights.
 The newly trained model will be evaluated, and it's accuracy outputted.    
 
+![Image of interactive.py](/images/Capture.png)
+
 Upon running interactive.py, a small window will pop up. You are able to draw in the bordered off box. 
 Above the drawing section there are two key prompts, pressing C, deletes everything you've drawn on screen. 
 Pressing T queries the trained model, a text along the bottom of the border displays the neural network's 
 guess. 
+
+## Neural Network Details
+Input layer 784 units, activation function sigmoid.  
+Input vector is divided by 255.0 to reduce input to values between 0 and 1.  
+Hidden layer 500 units, activation function sigmoid.  
+Output layer 10 units, activation function sigmoid.  
+Optimizer is Adam, loss is mean squared error.  
+  
+Testing accuracy: ~98.14%
 
 ## Credits
 * Author: Lee Taylor

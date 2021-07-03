@@ -1,6 +1,6 @@
-from keras import Sequential
-from keras.layers import Dense
 from tensorflow import keras
+from tensorflow.keras import Sequential
+from tensorflow.keras.layers import Dense
 from train_model import trained_model
 from typing import List, NoReturn
 import numpy as np

@@ -47,7 +47,7 @@ def trained_model() -> keras.Sequential:
     train_x, train_y = load_data("mnist_data/mnist_train.csv")
     model = build_model()
     # store model weights as checkpoints
-    checkpoint_path = "model_weights_test/cp.cpkt"
+    checkpoint_path = "model_weights/cp.cpkt"
     cp_callback = tf.keras.callbacks.ModelCheckpoint(
         filepath=checkpoint_path,
         save_weights_only=True,
@@ -56,7 +56,7 @@ def trained_model() -> keras.Sequential:
     # fit model
     model.fit(train_x, train_y, batch_size=16,
               epochs=5, verbose=1, callbacks=[cp_callback])
-    keras.models.save_model(model=model, filepath="model_test")
+    keras.models.save_model(model=model, filepath="model")
     return model
 
 

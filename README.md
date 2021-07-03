@@ -22,7 +22,7 @@ If you run train_model.py, it will build and train a new model which will overwr
 and weights.
 The newly trained model will be evaluated, and it's accuracy outputted.    
 
-![Image of interactive.py](/images/Capture.png)
+![Image of interactive.py](/images/Capture.PNG)
 
 Upon running interactive.py, a small window will pop up. You are able to draw in the bordered off box. 
 Above the drawing section there are two key prompts, pressing C, deletes everything you've drawn on screen. 
